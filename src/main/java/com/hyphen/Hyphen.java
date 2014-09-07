@@ -91,9 +91,29 @@ public class Hyphen {
 
     public static <O> Map<Boolean, List<O>> partition(List<O> list, Predicate<? super O> predicate) {
         Map<Boolean, List<O>> result = new HashMap<>();
-        result.put(true,filter(list, predicate));
-        result.put(false,filter(list, new InversePredicate<O>(predicate)));
+        result.put(true, filter(list, predicate));
+        result.put(false, filter(list, new InversePredicate<O>(predicate)));
         return result;
     }
 
+
+    public static <O, F> List<F> flatten(List<O> list) {
+        List<F> result = new ArrayList<>();
+        list.forEach(l -> recursiveFlatten(result, l));
+        return result;
+    }
+
+    public static <O> List<O> without(List<O> list, O...ignores) {
+        return filter(list,new IgnorePredicate(ignores));
+    }
+
+
+    private static <O, F> void recursiveFlatten(List<F> result, O l) {
+        if (l instanceof List) {
+            ((List) l).forEach(sl -> recursiveFlatten(result, sl));
+        }else {
+            result.add((F) l);
+        }
+
+    }
 }

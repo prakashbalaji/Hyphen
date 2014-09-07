@@ -211,5 +211,27 @@ public class HyphenTest {
         assertThat(partitions.get(false), hasItems(1, 2, 3, 4, 5, 6, 7));
     }
 
+    @Test
+    public void testFlatten() throws Exception {
+        List<Object> list = asList(asList(1, 2), asList(3, 4), asList(asList(5, 6)));
+        List<Integer> flattened = flatten(list);
+        assertThat(flattened.size(), is(6));
+        assertThat(flattened, hasItems(1, 2, 3, 4, 5, 6));
+
+        Data data1 = new Data(10, "field1");
+        Data data2 = new Data(20, "field2");
+        Data data3 = new Data(30, "field3");
+        List<Object> list1 = asList(asList(data1, data2), asList(data3));
+        assertThat(flatten(list1).size(), is(3));
+
+    }
+
+    @Test
+    public void testWithout() throws Exception {
+        List<Integer> list = asList(1, 2, 3, 4, 5, 6, 7);
+        List<Integer> retained = without(list, 2,3);
+        assertThat(retained.size(), is(5));
+        assertThat(retained, hasItems(1, 4, 5, 6, 7));
+    }
 
 }
