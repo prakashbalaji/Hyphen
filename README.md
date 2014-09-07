@@ -3,7 +3,7 @@ Hyphen
 
 Java Equivalent of javascript underscore library
 
-The stream api is a cool addition to Java 8 but the api is not nice to use. Underscorejs has a nice api collection and this is an implementation for those api in java. Language limitations could have restricted in the api being slightly different but the name of the method and the functionality provided are retained.
+The stream api is a cool addition to Java 8 but it's use leads to some verbosity in the code. Underscorejs has a nice api for collection and this is an implementation for those api in java. Language limitations could have restricted the api being slightly different but the name of the method and the functionality provided are retained.
 
 Usage
 =========
@@ -102,6 +102,12 @@ Examples
                     {"odd":4}
                 ]
 
+- partition([1, 2, 3, 4, 5, 6, 7], d -> d % 2 == 0)
+
+                {
+                    true:[2,4,6]
+                    false:[1,3,4,7]
+                }
 
 Version
 ----
