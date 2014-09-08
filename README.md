@@ -126,6 +126,9 @@ Examples
 
                 [1, 4, 5, 6, 7]
 
+- chain([6,4,5,3,2,1]).filter(d -> d > 3).map(d -> d * d).filter(d -> d != 25).sort(d -> d).value();
+
+                [16,36]
 
 Version
 ----

@@ -243,4 +243,29 @@ public class HyphenTest {
         assertThat(retained, hasItems(1, 4, 5, 6, 7));
     }
 
+    @Test
+    public void testChainingObjects() throws Exception {
+        List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"), new Data(30, "field3"));
+        List<String> filterAndPluck = chain(list).filter(d -> d.getId() > 10).pluck(Data::getName).value();
+        assertThat(filterAndPluck.size(), is(2));
+        assertThat(filterAndPluck, hasItems("field2", "field3"));
+    }
+
+    @Test
+    public void testChainingPrimitive() throws Exception {
+        List<Integer> list = asList(6, 5, 4, 3, 2, 1);
+        List<Integer> processed =
+                chain(list)
+                        .filter(d -> d > 3)
+                        .map(d -> d * d)
+                        .filter(d -> d != 25)
+                        .sort(d -> d)
+                        .value();
+
+        assertThat(processed.size(), is(2));
+        assertThat(processed.get(0), is(16));
+        assertThat(processed.get(1), is(36));
+    }
+
+
 }

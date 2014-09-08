@@ -114,7 +114,7 @@ public class Hyphen {
         return result;
     }
 
-    public static <O> List<O> without(List<O> list, O... ignores) {
+    public static <O> List<O> without(List<O> list, O...ignores) {
         return filter(list, new IgnorePredicate(ignores));
     }
 
@@ -125,6 +125,9 @@ public class Hyphen {
         } else {
             result.add((F) l);
         }
+    }
 
+    public static <O> ChainList<O> chain(List<O> list) {
+        return new ChainList<O>(list);
     }
 }
