@@ -4,18 +4,14 @@ import com.hyphen.model.Data;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.hyphen.CompactMap.KeyValue.kv;
 import static com.hyphen.CompactMap.m;
 import static com.hyphen.Hyphen.*;
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
@@ -43,6 +39,20 @@ public class HyphenTest {
         String names = reduce(list, Data::getName, "", (a, b) -> a + b);
         assertThat(total, is(30));
         assertThat(names, is("field1field2"));
+    }
+
+    @Test
+    public void testFold() throws Exception {
+        List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
+        String names = fold(list, (a, acc) -> acc + a.getName(), "");
+        assertThat(names, is("field1field2"));
+    }
+
+    @Test
+    public void testLfold() throws Exception {
+        List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
+        List<String> names = lfold(list, a -> a.getName());
+        assertThat(names, is(asList("field1", "field2")));
     }
 
 
@@ -229,7 +239,7 @@ public class HyphenTest {
     @Test
     public void testWithout() throws Exception {
         List<Integer> list = asList(1, 2, 3, 4, 5, 6, 7);
-        List<Integer> retained = without(list, 2,3);
+        List<Integer> retained = without(list, 2, 3);
         assertThat(retained.size(), is(5));
         assertThat(retained, hasItems(1, 4, 5, 6, 7));
     }

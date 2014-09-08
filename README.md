@@ -31,6 +31,14 @@ Examples
 
                 [100,400,900]
 
+- lfold(employees, e -> e.getId()) =>
+
+                [100,400,900]
+
+- fold(employees, (e, acc) -> acc + e.getName(), "") =>
+
+                foobarbaz
+
 - reduce(employees, Employee::getId, 0, (a, b) -> a + b) => 
 
                 60

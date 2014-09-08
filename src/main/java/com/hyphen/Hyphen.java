@@ -1,10 +1,7 @@
 package com.hyphen;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -24,6 +21,20 @@ public class Hyphen {
                 .map(mapper)
                 .reduce(identity,
                         accumulator);
+    }
+
+
+    public static <O, F> F fold(List<O> list, BiFunction<? super O, F, F> mapper, F accumulator) {
+        for (O o : list) {
+            accumulator = mapper.apply(o, accumulator);
+        }
+        return accumulator;
+    }
+
+    public static <O, F> List<F> lfold(List<O> list, Function<? super O, F> mapper) {
+        List<F> accumulator = new ArrayList<F>();
+        list.stream().forEach(e -> accumulator.add(mapper.apply(e)));
+        return accumulator;
     }
 
     public static <O> O find(List<O> list, Predicate<? super O> predicate) {
@@ -103,15 +114,15 @@ public class Hyphen {
         return result;
     }
 
-    public static <O> List<O> without(List<O> list, O...ignores) {
-        return filter(list,new IgnorePredicate(ignores));
+    public static <O> List<O> without(List<O> list, O... ignores) {
+        return filter(list, new IgnorePredicate(ignores));
     }
 
 
     private static <O, F> void recursiveFlatten(List<F> result, O l) {
         if (l instanceof List) {
             ((List) l).forEach(sl -> recursiveFlatten(result, sl));
-        }else {
+        } else {
             result.add((F) l);
         }
 
