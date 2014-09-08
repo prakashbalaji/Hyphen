@@ -31,7 +31,7 @@ Examples
 
                 [100,400,900]
 
-- lfold(employees, e -> e.getId()) =>
+- lapply(employees, e -> e.getId()) =>
 
                 [100,400,900]
 

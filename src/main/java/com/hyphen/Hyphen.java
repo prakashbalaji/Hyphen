@@ -31,7 +31,7 @@ public class Hyphen {
         return accumulator;
     }
 
-    public static <O, F> List<F> lfold(List<O> list, Function<? super O, F> mapper) {
+    public static <O, F> List<F> lapply(List<O> list, Function<? super O, F> mapper) {
         List<F> accumulator = new ArrayList<F>();
         list.stream().forEach(e -> accumulator.add(mapper.apply(e)));
         return accumulator;
