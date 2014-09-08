@@ -2,6 +2,10 @@ package com.hyphen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import static com.hyphen.Hyphen.fold;
+import static java.util.Arrays.asList;
 
 public class CompactMap {
 
@@ -27,10 +31,12 @@ public class CompactMap {
         }
     }
     public static Map<String,Object> m(KeyValue...kv){
-        Map<String, Object> result = new HashMap<>();
-        for (KeyValue keyValue : kv) {
-            result.put(keyValue.getKey(),keyValue.getValue());
-        }
-        return result;
+        return fold(asList(kv), 
+                (f, acc) -> {
+                    acc.put(f.getKey(), f.getValue()); 
+                    return acc;
+                }, 
+                new HashMap<String, Object>());
+        
     }
 }
