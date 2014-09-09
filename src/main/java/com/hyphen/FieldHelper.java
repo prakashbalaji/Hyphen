@@ -3,7 +3,7 @@ package com.hyphen;
 import java.lang.reflect.Field;
 
 public class FieldHelper {
-    public static <O> Object accessField (String fieldName, O o) {
+    public static <O> Object accessField(String fieldName, O o) {
         Field field = null;
         try {
             field = o.getClass().getDeclaredField(fieldName);

@@ -112,7 +112,7 @@ public class Hyphen {
         return result;
     }
 
-    public static <O> List<O> without(Collection<O> list, O...ignores) {
+    public static <O> List<O> without(Collection<O> list, O... ignores) {
         return filter(list, new IgnorePredicate(ignores));
     }
 

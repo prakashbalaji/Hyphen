@@ -1,12 +1,11 @@
 package com.hyphen;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.Collection;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 public class ChainList<O> {
@@ -45,7 +44,7 @@ public class ChainList<O> {
         return new ChainList<>(Hyphen.flatten(list));
     }
 
-    public ChainList<O> without(O...ignores) {
+    public ChainList<O> without(O... ignores) {
         return new ChainList<>(Hyphen.without(list, ignores));
     }
 

@@ -1,7 +1,7 @@
 package com.hyphen.model;
 
 
-public class Data implements Comparable<Data>{
+public class Data implements Comparable<Data> {
     private Integer id;
     private String name;
 
@@ -26,17 +26,17 @@ public class Data implements Comparable<Data>{
         return name;
     }
 
-    public void increment(){
+    public void increment() {
         ++id;
     }
 
-    public void increment(Integer incCounter){
+    public void increment(Integer incCounter) {
         id += incCounter;
     }
 
 
-    public Integer square(){
-        return id*id;
+    public Integer square() {
+        return id * id;
     }
 
 

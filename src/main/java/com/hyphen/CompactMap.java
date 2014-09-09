@@ -2,7 +2,6 @@ package com.hyphen;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static com.hyphen.Hyphen.fold;
 import static java.util.Arrays.asList;
@@ -18,9 +17,11 @@ public class CompactMap {
             this.value = value;
         }
 
-        public static KeyValue kv(String key, Object value){
-            return new KeyValue(key,value);
-        };
+        public static KeyValue kv(String key, Object value) {
+            return new KeyValue(key, value);
+        }
+
+        ;
 
         public String getKey() {
             return key;
@@ -30,13 +31,14 @@ public class CompactMap {
             return value;
         }
     }
-    public static Map<String,Object> m(KeyValue...kv){
-        return fold(asList(kv), 
+
+    public static Map<String, Object> m(KeyValue... kv) {
+        return fold(asList(kv),
                 (f, acc) -> {
-                    acc.put(f.getKey(), f.getValue()); 
+                    acc.put(f.getKey(), f.getValue());
                     return acc;
-                }, 
+                },
                 new HashMap<String, Object>());
-        
+
     }
 }
