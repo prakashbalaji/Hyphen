@@ -4,6 +4,7 @@ import com.hyphen.model.Data;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,7 @@ public class HyphenTest {
     @Test
     public void testLfold() throws Exception {
         List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
-        List<String> names = lapply(list, a -> a.getName());
+        Collection<String> names = lapply(list, a -> a.getName());
         assertThat(names, is(asList("field1", "field2")));
     }
 

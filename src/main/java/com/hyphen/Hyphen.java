@@ -11,7 +11,7 @@ public class Hyphen {
         list.stream().forEach(action);
     }
 
-    public static <O, F> Collection<F> map(Collection<O> list, Function<? super O, ? extends F> mapper) {
+    public static <O, F> List<F> map(Collection<O> list, Function<? super O, ? extends F> mapper) {
         return list.stream().map(mapper).collect(toList());
     }
 
@@ -31,10 +31,8 @@ public class Hyphen {
         return accumulator;
     }
 
-    public static <O, F> List<F> lapply(Collection<O> list, Function<? super O, F> mapper) {
-        List<F> accumulator = new ArrayList<F>();
-        list.stream().forEach(e -> accumulator.add(mapper.apply(e)));
-        return accumulator;
+    public static <O, F> List<F> lapply(Collection<O> list, Function<? super O, ? extends F> mapper) {
+        return map(list, mapper);
     }
 
     public static <O> O find(Collection<O> list, Predicate<? super O> predicate) {
