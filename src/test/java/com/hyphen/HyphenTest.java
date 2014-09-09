@@ -51,7 +51,7 @@ public class HyphenTest {
     @Test
     public void testLfold() throws Exception {
         List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
-        Collection<String> names = lapply(list, a -> a.getName());
+        List<String> names = lapply(list, a -> a.getName());
         assertThat(names, is(asList("field1", "field2")));
     }
 
