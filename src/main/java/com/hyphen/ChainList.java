@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.Collection;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public class ChainList<O> {
-    private final List<O> list;
+    private final Collection<O> list;
 
-    public ChainList(List<O> list) {
-
+    public ChainList(Collection<O> list) {
         this.list = list;
     }
 
@@ -47,6 +50,6 @@ public class ChainList<O> {
     }
 
     public List<O> value() {
-        return list;
+        return list.stream().collect(toList());
     }
 }
