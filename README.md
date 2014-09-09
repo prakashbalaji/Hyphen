@@ -39,6 +39,10 @@ Examples
 
                 foobarbaz
 
+- foldNoReduce(employees, (e, acc) -> acc.add(e.getName()), new ArrayList<String>()) =>
+
+                ["foo","bar","baz"]
+
 - reduce(employees, Employee::getId, 0, (a, b) -> a + b) => 
 
                 60

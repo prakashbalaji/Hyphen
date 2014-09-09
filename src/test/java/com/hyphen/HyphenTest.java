@@ -4,6 +4,7 @@ import com.hyphen.model.Data;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,13 @@ public class HyphenTest {
         List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
         String names = fold(list, (a, acc) -> acc + a.getName(), "");
         assertThat(names, is("field1field2"));
+    }
+
+    @Test
+    public void testFoldNoMap() throws Exception {
+        List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
+        List<String> names = foldNoReduce(list, (a, acc) -> acc.add(a.getName()), new ArrayList<String>());
+        assertThat(names, is(asList("field1", "field2")));
     }
 
     @Test

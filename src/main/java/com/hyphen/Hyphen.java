@@ -31,6 +31,13 @@ public class Hyphen {
         return accumulator;
     }
 
+    public static <O, F> F foldNoReduce(Collection<O> list,
+                                        BiFunction<? super O, F, ?> mapper,
+                                        F accumulator) {
+        list.forEach(f -> mapper.apply(f, accumulator));
+        return accumulator;
+    }
+
     public static <O, F> List<F> lapply(Collection<O> list, Function<? super O, ? extends F> mapper) {
         return map(list, mapper);
     }
