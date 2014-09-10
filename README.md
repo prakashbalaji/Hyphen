@@ -33,7 +33,7 @@ Examples
 
 - lapply(employees, e -> e.getId()) =>
 
-                [100,400,900]
+                [10,20,30]
 
 - fold(employees, (e, acc) -> acc + e.getName(), "") =>
 
@@ -69,7 +69,7 @@ Examples
 
 - reject(employees, e -> e.getName().equals("bar)) =>
 
-                [barEmployee,bazEmployee]
+                [fooEmployee,bazEmployee]
 
 - every(employees, d -> d.getId() >= 10)
 
@@ -156,7 +156,7 @@ MIT
 Contribution
 ------------
 
-Fork and send patch request
+Fork and send pull request
 
 What's In the Name
 ------

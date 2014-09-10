@@ -1,5 +1,9 @@
 package com.hyphen;
 
+import com.hyphen.predicate.CustomPredicate;
+import com.hyphen.predicate.IgnorePredicate;
+import com.hyphen.predicate.InversePredicate;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -132,7 +136,7 @@ public class Hyphen {
         }
     }
 
-    public static <O> ChainList<O> chain(Collection<O> list) {
-        return new ChainList<O>(list);
+    public static <O> ChainCollection<O> chain(Collection<O> list) {
+        return new ChainCollection<O>(list);
     }
 }

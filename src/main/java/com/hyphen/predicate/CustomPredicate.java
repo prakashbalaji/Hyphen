@@ -1,4 +1,6 @@
-package com.hyphen;
+package com.hyphen.predicate;
+
+import com.hyphen.FieldHelper;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.hyphen;
+package com.hyphen.predicate;
 
 import java.util.List;
 import java.util.function.Predicate;

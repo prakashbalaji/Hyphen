@@ -49,7 +49,7 @@ public class HyphenTest {
     }
 
     @Test
-    public void testFoldNoMap() throws Exception {
+    public void testFoldNoReduce() throws Exception {
         List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
         List<String> names = foldNoReduce(list, (a, acc) -> acc.add(a.getName()), new ArrayList<String>());
         assertThat(names, is(asList("field1", "field2")));
@@ -59,7 +59,7 @@ public class HyphenTest {
     public void testLfold() throws Exception {
         List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
         List<String> names = lapply(list, a -> a.getName());
-        assertThat(names, is(asList("field1", "field2")));
+        assertThat(names, (hasItems("field1", "field2")));
     }
 
 
