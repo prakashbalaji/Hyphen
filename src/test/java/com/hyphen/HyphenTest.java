@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import static com.hyphen.Hyphen.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 public class HyphenTest {
@@ -275,5 +277,23 @@ public class HyphenTest {
         assertThat(processed.get(1), is(36));
     }
 
+    @Test
+    public void testDistinctForObjects() throws Exception {
+        Data data1 = new Data(10, "field1");
+        Data data2 = new Data(20, "field2");
+        Data data3 = new Data(20, "field2");
+        List<Data> list = asList(data1, data2, data3);
+
+        assertEquals(Arrays.asList(data1, data2), distinct(list));
+    }
+
+    @Test
+    public void testDistinct() throws Exception {
+        List<String> strings = asList("a", "b", "a", "c");
+        List<Integer> integers = asList(1, 2, 2, 1, 4, 1);
+
+        assertEquals(asList("a", "b", "c"), distinct(strings));
+        assertEquals(asList(1, 2, 4), distinct(integers));
+    }
 
 }

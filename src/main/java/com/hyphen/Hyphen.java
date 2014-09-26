@@ -127,6 +127,9 @@ public class Hyphen {
         return filter(list, new IgnorePredicate(ignores));
     }
 
+    public static <O> List<O> distinct(Collection<O> list) {
+        return list.stream().distinct().collect(toList());
+    }
 
     private static <O, F> void recursiveFlatten(Collection<F> result, O l) {
         if (l instanceof Iterable) {
