@@ -6,6 +6,7 @@ import com.hyphen.predicate.InversePredicate;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
 
@@ -15,8 +16,12 @@ public class Hyphen {
         list.stream().forEach(action);
     }
 
-    public static <O, F> List<F> map(Collection<O> list, Function<? super O, ? extends F> mapper) {
-        return list.stream().map(mapper).collect(toList());
+    public static <O, F, T extends Collection<O>, R extends Collection<F>> R map( T list, Function<? super O, ? extends F> mapper) {
+        return collect(list.stream().map(mapper), list);
+    }
+
+    static <I,O, C extends Collection<I>, R extends Collection<O>> R collect(Stream<O> stream, C collection) {
+        return (R) (collection instanceof List ? stream.collect(toList()) : stream.collect(toSet()));
     }
 
     public static <O, F> F reduce(Collection<O> list, Function<? super O, ? extends F> mapper, F identity, BinaryOperator<F> accumulator) {
@@ -42,7 +47,7 @@ public class Hyphen {
         return accumulator;
     }
 
-    public static <O, F> List<F> lapply(Collection<O> list, Function<? super O, ? extends F> mapper) {
+    public static <O, F, T extends Collection<O>, R extends Collection<F>> R lapply( T list, Function<? super O, ? extends F> mapper) {
         return map(list, mapper);
     }
 
@@ -51,12 +56,12 @@ public class Hyphen {
         return optional.isPresent() ? optional.get() : null;
     }
 
-    public static <O> List<O> filter(Collection<O> list, Predicate<? super O> predicate) {
-        return list.stream().filter(predicate).collect(toList());
+    public static <O, T extends Collection<O>> T filter( T collection, Predicate<? super O> predicate) {
+        return collect(collection.stream().filter(predicate), collection);
     }
 
-    public static <O> List<O> reject(Collection<O> list, Predicate<? super O> predicate) {
-        return filter(list, new InversePredicate<O>(predicate)).stream().collect(toList());
+    public static <O,T extends Collection<O>> T reject(T collection, Predicate<? super O> predicate) {
+        return filter(collection, new InversePredicate<>(predicate));
     }
 
     public static <O> Boolean every(Collection<O> list, Predicate<? super O> predicate) {
@@ -67,19 +72,18 @@ public class Hyphen {
         return filter(list, predicate).size() > 0;
     }
 
-    public static <O, F> Collection<F> pluck(Collection<O> list, Function<? super O, ? extends F> function) {
-        return list.stream().map(function).collect(toList());
+    public static <O, F, T extends Collection<O>, R extends Collection<F>> R pluck( T collection, Function<? super O, ? extends F> function) {
+        return collect(collection.stream().map(function),collection);
     }
 
-    public static <O> List<O> where(Collection<O> list, Map<String, Object> whereClause) {
-        return list.stream().filter(new CustomPredicate<O>(whereClause)).collect(toList());
+    public static <O, T extends Collection<O>> T where(T collection, Map<String, Object> whereClause) {
+        return collect(collection.stream().filter(new CustomPredicate<O>(whereClause)), collection);
     }
 
     public static <O> O findWhere(Collection<O> list, Map<String, Object> whereClause) {
         Optional<O> optional = list.stream().filter(new CustomPredicate<O>(whereClause)).findFirst();
         return optional.isPresent() ? optional.get() : null;
     }
-
 
     public static <O, F extends Comparable<F>> F max(Collection<O> list, Function<? super O, ? extends F> mapper) {
         Optional<F> optional = list.stream().map(mapper).max(Comparator.<F>naturalOrder());
@@ -109,13 +113,12 @@ public class Hyphen {
         return result;
     }
 
-    public static <O> Map<Boolean, List<O>> partition(Collection<O> list, Predicate<? super O> predicate) {
-        Map<Boolean, List<O>> result = new HashMap<>();
-        result.put(true, filter(list, predicate));
-        result.put(false, filter(list, new InversePredicate<O>(predicate)));
+    public static <O, T extends Collection<O>> Map<Boolean, T> partition(T collection, Predicate<? super O> predicate) {
+        Map<Boolean, T> result = new HashMap<>();
+        result.put(true, filter(collection, predicate));
+        result.put(false, filter(collection, new InversePredicate<O>(predicate)));
         return result;
     }
-
 
     public static <O, F> List<F> flatten(Collection<O> list) {
         List<F> result = new ArrayList<>();
@@ -123,12 +126,12 @@ public class Hyphen {
         return result;
     }
 
-    public static <O> List<O> without(Collection<O> list, O... ignores) {
-        return filter(list, new IgnorePredicate(ignores));
+    public static <O, T extends Collection<O>> T without(T collection, O... ignores) {
+        return (T) filter(collection, new IgnorePredicate(ignores));
     }
 
-    public static <O> List<O> distinct(Collection<O> list) {
-        return list.stream().distinct().collect(toList());
+    public static <O, T extends Collection<O>> T distinct(T collection) {
+        return collect(collection.stream().distinct(), collection);
     }
 
     private static <O, F> void recursiveFlatten(Collection<F> result, O l) {
@@ -139,7 +142,7 @@ public class Hyphen {
         }
     }
 
-    public static <O> ChainCollection<O> chain(Collection<O> list) {
-        return new ChainCollection<O>(list);
+    public static <O, T extends Collection<O>> ChainCollection<O,T> chain(T list) {
+        return new ChainCollection<>(list);
     }
 }

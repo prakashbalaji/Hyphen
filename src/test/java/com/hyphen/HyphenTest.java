@@ -4,10 +4,7 @@ import com.hyphen.model.Data;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.hyphen.CompactMap.KeyValue.kv;
 import static com.hyphen.CompactMap.m;
@@ -19,6 +16,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 public class HyphenTest {
+
+    @Test
+    public void testCollectList() {
+        List<Data> list = asList(new Data(10, "field1"), new Data(20, "field2"));
+        assertTrue(collect(list.stream(), list) instanceof List );
+    }
+
+    @Test
+    public void testCollectSet() {
+        Set<Data> set = new HashSet<>();
+        assertTrue( collect(set.stream(), set) instanceof Set );
+    }
+
 
     @Test
     public void testEach() throws Exception {
