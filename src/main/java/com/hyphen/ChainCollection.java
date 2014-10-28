@@ -20,9 +20,8 @@ public class ChainCollection<O, T extends Collection<O>> {
     }
 
 
-    public <F, R extends Collection<F>> ChainCollection<F, R> pluck(Function<? super O, ? extends F> function) {
-        R pluck = Hyphen.pluck(collection, function);
-        return new ChainCollection<>(pluck);
+    public <F> ChainCollection<F, List<F>> pluck(Function<? super O, ? extends F> function) {
+        return new ChainCollection<>(Hyphen.pluck(collection, function));
     }
 
     public <F, R extends Collection<F>> ChainCollection<F,R> map(Function<? super O, ? extends F> mapper) {

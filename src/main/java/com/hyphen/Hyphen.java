@@ -72,8 +72,8 @@ public class Hyphen {
         return filter(list, predicate).size() > 0;
     }
 
-    public static <O, F, T extends Collection<O>, R extends Collection<F>> R pluck( T collection, Function<? super O, ? extends F> function) {
-        return collect(collection.stream().map(function),collection);
+    public static <O, F, T extends Collection<O>> List<F> pluck( T collection, Function<? super O, ? extends F> function) {
+        return collection.stream().map(function).collect(toList());
     }
 
     public static <O, T extends Collection<O>> T where(T collection, Map<String, Object> whereClause) {
